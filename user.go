@@ -74,7 +74,7 @@ type Repository struct {
 	UpdatedAt                *time.Time `json:"updated_at,omitempty"`
 }
 
-// Get information for a given user or organization.
+// Login gets information for a given user or organization.
 func (c *Client) Login(ctx context.Context, login string) (*User, *http.Response, error) {
 	urlString := fmt.Sprintf("github/%v", login)
 
@@ -90,4 +90,23 @@ func (c *Client) Login(ctx context.Context, login string) (*User, *http.Response
 		return nil, res, err
 	}
 	return user, res, nil
+}
+
+// UserPackages gets a list of packages referencing the given user's repositories.
+func (c *Client) UserPackages(ctx context.Context, login string) ([]*Project, response *http.Response, error) {
+	urlString := fmt.Sprintf("github/%v/projects", login)
+
+	req, err := c.NewRequest("GET", urlString, nil)
+
+	if err != nil {
+		return nil, nil, err
+	}
+
+	var projects []*Project
+
+	res, err := c.makeCall(ctx, req, &projects)
+	if err != nil {
+		return nil, res, err
+	}
+	return projects, res, nil
 }

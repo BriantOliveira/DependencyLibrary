@@ -1,6 +1,11 @@
 package library
 
-import "time"
+import (
+	"context"
+	"fmt"
+	"net/http"
+	"time"
+)
 
 type User struct {
 	ID 				*int		`json:"id, omitempty"`
@@ -69,3 +74,20 @@ type Repository struct {
 	UpdatedAt                *time.Time `json:"updated_at,omitempty"`
 }
 
+// Get information for a given user or organization.
+func (c *Client) Login(ctx context.Context, login string) (*User, *http.Response, error) {
+	urlString := fmt.Sprintf("github/%v", login)
+
+	req, err := c.NewRequest("GET", urlString, nil)
+	if err != nil {
+		return nil, nil, err
+	}
+
+	user := new(User)
+
+	res, err := c.makeCall(ctx, req, user)
+	if err != nil {
+		return nil, res, err
+	}
+	return user, res, nil
+}

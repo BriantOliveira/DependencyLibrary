@@ -1,8 +1,13 @@
 package library
 
-import "time"
+import (
+	"context"
+	"fmt"
+	"net/http"
+	"time"
+)
 
-// Project represents the table of project in libraries.io
+// Project represents the table of project in libraries.io BigQuery
 type Project struct {
 	Description              *string    `json:"description,omitempty"`
 	Forks                    *int       `json:"forks,omitempty"`
@@ -21,9 +26,46 @@ type Project struct {
 	Status                   *string    `json:"status,omitempty"`
 	Versions                 []*Releases`json:"versions,omitempty"`
 
-	// Dependencies are only populated for Project Dependencies
-	Dependencies []*ProjectDependency `json:"dependencies,omitempty"`
+	// Dependencies are only for Project Dependencies
+	Dependencies []*ProjectDependencies `json:"dependencies,omitempty"`
 
-	// RepositoryURL is only populated for User Projects
+	// RepositoryURL is only for User Projects
 	RepositoryURL *string `json:"repository_url,omitempty"`
+}
+
+// Releases are a for the releases of the project
+type Releases struct {
+	Number 			*string 	`json:"number,omitempty"`
+	PublishedAt		*time.Time	`json:"published_at, omitempty"`
+}
+
+// Project Dependencies shows the dependencies of a given project
+type ProjectDependencies struct {
+	Deprecated 		*bool 		`json:"deprecated, omitempty"`
+	Latest			*string		`json:"latest, omitempty"`
+	LatestStable	*string 	`json:"latest_stable, omitempty"`
+	Name			*string		`json:"outdated, omitempty"`
+	Outdated		*bool		`json:"outdated, omitempty"`
+	Platform		*string		`json:"platform, omitempty"`
+	ProjectName		*string		`json:"platform, omitempty"`
+	Requirements	*string		`json:"requirements, omitempty"`
+}
+
+
+// Get information about a package and its versions.
+func (c * Client) Project(ctx context.Context, platform, name string) (*Project, *http.Response, error) {
+	urlString := fmt.Sprintf("%v/%v", platform, name)
+
+	req, err := c.NewRequest("GET", urlString, nil)
+
+	if err != nil {
+		return nil, nil, err
+	}
+
+	projects := new(Project)
+	res, err := c.Do(ctx, req, projects)
+	if err != nil {
+		return nil, res, err
+	}
+	return projects, res, nil
 }

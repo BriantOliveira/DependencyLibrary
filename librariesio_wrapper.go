@@ -1,6 +1,7 @@
 package library
 
 import (
+	"context"
 	"encoding/json"
 	"fmt"
 	"io"
@@ -118,4 +119,45 @@ func LookResponse(res *http.Response) error {
 	return ResponseErr
 }
 
+
+func (c *Client) makeCall(ctx context.Context, req *http.Request, obj interface{}) (*http.Response, error) {
+	req = req.WithContext(ctx)
+
+	res, err := c.client.Do(req)
+
+	if err != nil {
+		select {
+		case <-ctx.Done():
+			c.transport.CancelRequest(req)
+			return nil, ctx.Err()
+
+		default:
+			if urlErr, ok := err.(*url.Error); ok {
+				if url, err := url.Parse(urlErr.URL); err == nil {
+					urlErr.URL = OverwriteAPIKey(url).String()
+					return nil, urlErr
+				}
+			}
+			return nil, err
+		}
+	}
+	defer res.Body.Close()
+
+	if err := LookResponse(res); err != nil {
+		return res, err
+	}
+
+	if obj != nil {
+		body, err := ioutil.ReadAll(res.Body)
+		if err != nil {
+			return nil, err
+		}
+
+		err = json.Unmarshal(body, obj)
+		if err != nil {
+			return nil, err
+		}
+	}
+	return res, nil
+}
 

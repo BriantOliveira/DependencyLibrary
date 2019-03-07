@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="21354843-f887-4677-9440-b0e700c6e15c" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/librariesio_wrapper.go" beforeDir="false" afterPath="$PROJECT_DIR$/librariesio_wrapper.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects.go" beforeDir="false" afterPath="$PROJECT_DIR$/projects.go" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -15,8 +16,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/projects.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="735">
-              <caret line="90" selection-start-line="90" selection-end-line="90" />
+            <state relative-caret-position="378">
+              <caret line="85" column="28" lean-forward="true" selection-start-line="85" selection-start-column="28" selection-end-line="85" selection-end-column="28" />
               <folding>
                 <element signature="e#17#51#0" expanded="true" />
               </folding>
@@ -27,8 +28,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/librariesio_wrapper.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="473">
-              <caret line="78" lean-forward="true" selection-start-line="78" selection-end-line="78" />
+            <state relative-caret-position="485">
+              <caret line="135" column="31" selection-start-line="135" selection-start-column="31" selection-end-line="135" selection-end-column="31" />
               <folding>
                 <element signature="e#17#50#0" expanded="true" />
               </folding>
@@ -44,6 +45,11 @@
         <option value="Go File" />
       </list>
     </option>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>newRe</find>
+    </findStrings>
   </component>
   <component name="GOROOT" path="/usr/local/go" />
   <component name="Git.Settings">
@@ -148,8 +154,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/projects.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="735">
-          <caret line="90" selection-start-line="90" selection-end-line="90" />
+        <state relative-caret-position="378">
+          <caret line="85" column="28" lean-forward="true" selection-start-line="85" selection-start-column="28" selection-end-line="85" selection-end-column="28" />
           <folding>
             <element signature="e#17#51#0" expanded="true" />
           </folding>
@@ -158,8 +164,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/librariesio_wrapper.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="473">
-          <caret line="78" lean-forward="true" selection-start-line="78" selection-end-line="78" />
+        <state relative-caret-position="485">
+          <caret line="135" column="31" selection-start-line="135" selection-start-column="31" selection-end-line="135" selection-end-column="31" />
           <folding>
             <element signature="e#17#50#0" expanded="true" />
           </folding>

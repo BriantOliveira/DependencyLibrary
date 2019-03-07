@@ -63,7 +63,7 @@ func (c * Client) Project(ctx context.Context, platform, name string) (*Project,
 	}
 
 	projects := new(Project)
-	res, err := c.Do(ctx, req, projects)
+	res, err := c.makeCall(ctx, req, projects)
 	if err != nil {
 		return nil, res, err
 	}
@@ -81,7 +81,7 @@ func (c *Client) ProjectDependency(ctx context.Context, platform, name, version 
 	}
 	project := new(Project)
 
-	res, err := c.Do(ctx, req, project)
+	res, err := c.makeCall(ctx, req, project)
 	if err != nil {
 		return nil, res, err
 	}

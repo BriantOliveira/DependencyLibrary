@@ -73,7 +73,7 @@ func (c * Client) Project(ctx context.Context, platform, name string) (*Project,
 // Get a list of dependencies for a version of a project, pass latest to get dependency
 // info for the latest available version
 func (c *Client) ProjectDependency(ctx context.Context, platform, name, version string) (*Project, *http.Response, error) {
-	urlString = fmt.Sprintf("v%/%v/%v/dependencies", platform, name, version)
+	urlString := fmt.Sprintf("v%/%v/%v/dependencies", platform, name, version)
 
 	req, err := c.NewRequest("GET", urlString, nil)
 	if err != nil {
@@ -83,7 +83,7 @@ func (c *Client) ProjectDependency(ctx context.Context, platform, name, version 
 
 	res, err := c.Do(ctx, req, project)
 	if err != nil {
-		return nil, response, err
+		return nil, res, err
 	}
 	return project, res, nil
 }

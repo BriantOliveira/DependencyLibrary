@@ -2,7 +2,9 @@ package library
 
 import (
 	"encoding/json"
+	"fmt"
 	"io"
+	"io/ioutil"
 	"net/http"
 	"net/url"
 	"bytes"
@@ -84,8 +86,36 @@ func OverwriteAPIKey(url *url.URL) *url.URL {
 	return url
 }
 
+// ResError stores errors return by API call
 type ResError struct {
 	Response 	*http.Response
 	Message 	string 	`json:"error"`
 }
+
+// Error handles the error
+func (res *ResError) Error() string {
+	return fmt.Sprintf(
+		"%v %v: %d %q",
+		res.Response.Request.Method,
+		OverwriteAPIKey(res.Response.Request.URL),
+		res.Response.StatusCode,
+		res.Message,
+		)
+}
+
+//Look Response check the response from API and see if there is any error
+func LookResponse(res *http.Response) error {
+	if stat := res.StatusCode; 200 <= stat && stat <= 299 {
+		return nil
+	}
+
+	ResponseErr := &ResError{Response: res}
+
+	data, err := ioutil.ReadAll(res.Body)
+	if err == nil && data != nil {
+		json.Unmarshal(data, ResponseErr)
+	}
+	return ResponseErr
+}
+
 

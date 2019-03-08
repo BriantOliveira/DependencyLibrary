@@ -93,7 +93,7 @@ func (c *Client) UserInfo(ctx context.Context, login string) (*User, *http.Respo
 }
 
 // UserPackages gets a list of packages referencing the given user's repositories.
-func (c *Client) UserPackages(ctx context.Context, login string) ([]*Project, response *http.Response, error) {
+func (c *Client) UserPackages(ctx context.Context, login string) ([]*Project, *http.Response, error) {
 	urlString := fmt.Sprintf("github/%v/projects", login)
 
 	req, err := c.NewRequest("GET", urlString, nil)

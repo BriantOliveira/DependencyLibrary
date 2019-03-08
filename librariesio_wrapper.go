@@ -1,6 +1,7 @@
 package library
 
 import (
+	"bytes"
 	"context"
 	"encoding/json"
 	"fmt"
@@ -8,7 +9,6 @@ import (
 	"io/ioutil"
 	"net/http"
 	"net/url"
-	"bytes"
 )
 
 const (
@@ -19,27 +19,26 @@ const (
 	mediaType      = "application/json"
 )
 
-
 // Making connection to libraries.io API
 type Client struct {
-	apiKey 		string
-	transport 	*http.Transport
-	client		*http.Client
-	UserAgent	string
-	BaseURL		*url.URL
+	apiKey    string
+	transport *http.Transport
+	client    *http.Client
+	UserAgent string
+	BaseURL   *url.URL
 }
 
 func NewClient(apiKey string) *Client {
 	APIBaseURL, _ := url.Parse(baseURL)
 	transport := &http.Transport{}
-	client := &http.Client{Transport:transport}
+	client := &http.Client{Transport: transport}
 
 	return &Client{
-		apiKey: apiKey,
-		client: client,
+		apiKey:    apiKey,
+		client:    client,
 		transport: transport,
 		UserAgent: userAgent,
-		BaseURL: APIBaseURL,
+		BaseURL:   APIBaseURL,
 	}
 }
 
@@ -89,8 +88,8 @@ func OverwriteAPIKey(url *url.URL) *url.URL {
 
 // ResError stores errors return by API call
 type ResError struct {
-	Response 	*http.Response
-	Message 	string 	`json:"error"`
+	Response *http.Response
+	Message  string `json:"error"`
 }
 
 // Error handles the error
@@ -101,7 +100,7 @@ func (res *ResError) Error() string {
 		OverwriteAPIKey(res.Response.Request.URL),
 		res.Response.StatusCode,
 		res.Message,
-		)
+	)
 }
 
 //Look Response check the response from API and see if there is any error
@@ -118,7 +117,6 @@ func LookResponse(res *http.Response) error {
 	}
 	return ResponseErr
 }
-
 
 func (c *Client) makeCall(ctx context.Context, req *http.Request, obj interface{}) (*http.Response, error) {
 	req = req.WithContext(ctx)
@@ -160,4 +158,3 @@ func (c *Client) makeCall(ctx context.Context, req *http.Request, obj interface{
 	}
 	return res, nil
 }
-

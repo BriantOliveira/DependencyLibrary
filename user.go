@@ -75,7 +75,7 @@ type Repository struct {
 }
 
 // Login gets information for a given user or organization.
-func (c *Client) Login(ctx context.Context, login string) (*User, *http.Response, error) {
+func (c *Client) UserInfo(ctx context.Context, login string) (*User, *http.Response, error) {
 	urlString := fmt.Sprintf("github/%v", login)
 
 	req, err := c.NewRequest("GET", urlString, nil)
@@ -109,4 +109,22 @@ func (c *Client) UserPackages(ctx context.Context, login string) ([]*Project, re
 		return nil, res, err
 	}
 	return projects, res, nil
+}
+
+// UserRepositories gets repositories owned by a user.
+func (c *Client) UserRepositories(ctx context.Context, login string) ([]*Repository, *http.Response, error) {
+	urlString := fmt.Sprintf("github/%v/repositories", login)
+
+	req, err := c.NewRequest("GET", urlString, nil)
+
+	if err != nil {
+		return nil, nil, err
+	}
+	var repo []*Repository
+
+	res, err := c.makeCall(ctx, req, &repo)
+	if err != nil {
+		return nil, res, err
+	}
+	return repo, res, nil
 }

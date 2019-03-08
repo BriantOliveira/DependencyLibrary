@@ -2,7 +2,7 @@
 DependencyLibrary is a Go client library for accessing the [libraries.io](www.libraries.io) API.
 ***
 
-## Connecting 
+## Connect
 Connecting to the [libraries.io](www.libraries.io) API with DependencyLibrary requires a private [API key](https://libraries.io/account).
 ***
 
